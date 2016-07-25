@@ -4,7 +4,7 @@ function initialSetup() {
     // initialize tabs and accordion.
     // Saving last active element using localStorage
     $('#tabs').tabs({
-        activate: function(event, ui) {
+        activate: function() {
             localStorage.setItem('active_tab', $('#tabs')
             .tabs('option', 'active'));
         },
@@ -13,7 +13,7 @@ function initialSetup() {
 
     $('#accordion').accordion({
         heightStyle: 'content',
-        change: function(event, ui) {
+        change: function() {
             localStorage.setItem('active_accordion', $('#accordion')
                 .accordion('option', 'active'));
         },
@@ -45,7 +45,7 @@ function viewReleases() {
         return null;
     };
 
-    var yesIfDataIsNotNull = function(data, type, full) {
+    var yesIfDataIsNotNull = function(data) {
         if (data) {
             return 'Yes';
         }
@@ -53,7 +53,7 @@ function viewReleases() {
         return 'No';
     };
 
-    var buildl10nLink = function(data, type, full) {
+    var buildl10nLink = function(data) {
         return '<a style="cursor: pointer; text-decoration: underline;" href="/releases/' + data + '/l10n">Link</a>';
     };
 
@@ -114,7 +114,7 @@ function viewReleases() {
             {'mData': 'comment', 'mRender': buildCommentCell}
         ]
         ,
-        'fnDrawCallback': function(oSettings) {
+        'fnDrawCallback': function() {
             setTimeout(function() {
                 var width = $('.ui-accordion-header').innerWidth();
                 $('#tabContainer').width(width);
@@ -151,11 +151,11 @@ function viewReleases() {
         },
         'aoColumns': [
             {'mData': 'name', 'bSearchable': false, 'bSortable': false,
-             'mRender': function(data, type, full) {
+             'mRender': function(data) {
                  return '<a class="btn btn-default btn-xs" href="release/' + data + '/edit_release.html">Edit</a>';
              }},
             {'mData': 'status',
-             'mRender': function(data, type, full) {
+             'mRender': function(data) {
                  if (data == 'Complete') {
                      return '<span class="status_complete">' + data + '</span>';
                  }
@@ -166,7 +166,7 @@ function viewReleases() {
             {'mData':  'description'},
             {'mData': 'submitter'},
             {'mData': 'submittedAt', 'bSearchable': false,
-             'mRender': function(data, type, full) {
+             'mRender': function(data) {
                  return '<span style="white-space: nowrap;" class="dateDisplay">' + data + '</span>';
              }},
             {'mData': 'branch'},
@@ -177,7 +177,7 @@ function viewReleases() {
             {'mData': 'dashboardCheck', 'sDefaultContent': 'N/A'},
             {'mData': 'name', 'mRender': buildl10nLink},
             {'mData': 'partials',
-             'mRender': function(data, type, full) {
+             'mRender': function(data) {
                  if (data) {
                      return commaToNewLine(data);
                  }
@@ -188,7 +188,7 @@ function viewReleases() {
             {'mData': 'mh_changeset', 'sDefaultContent': 'N/A'},
             {'mData': 'comment', 'mRender': buildCommentCell},
             {'mData': 'shippedAt', 'bSearchable': false,
-             'mRender': function(data, type, full) {
+             'mRender': function(data) {
                  return '<span class="dateDisplay">' + data + '</span>';
              }},
             {'mData': 'status',
@@ -205,7 +205,7 @@ function viewReleases() {
 
              }}
         ],
-        'fnDrawCallback': function(oSettings) {
+        'fnDrawCallback': function() {
             toLocalDate();
             setTimeout(function() {
                 var width = $('.ui-accordion-header').innerWidth();
@@ -267,7 +267,7 @@ function sendAjaxQuery(releaseName, query) {
         location.reload();
     });
 
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function(jqXHR) {
         alert('Error: ' + jqXHR.responseText);
     });
 
