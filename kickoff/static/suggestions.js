@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, allPartial  */
 
 function isBeta(version) {
     // Beta version
