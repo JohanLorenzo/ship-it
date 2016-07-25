@@ -1,3 +1,5 @@
+/* global $ */
+
 function initialSetup() {
     // initialize tabs and accordion.
     // Saving last active element using localStorage

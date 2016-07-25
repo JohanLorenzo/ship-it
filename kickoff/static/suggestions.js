@@ -1,3 +1,5 @@
+/* global $ */
+
 function isBeta(version) {
     // Beta version
     betaRE = /^\d+\.[\d.]+b\d$/;
