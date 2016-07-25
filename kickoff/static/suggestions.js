@@ -60,7 +60,7 @@ function getBaseRepository(name) {
 
 function guessBranchFromVersion(name, version) {
 
-    base = getBaseRepository(name);
+    var base = getBaseRepository(name);
 
     if (version == '') {
         // Empty. Reset the field
@@ -95,12 +95,12 @@ function guessBranchFromVersion(name, version) {
 }
 
 function addLastVersionAsPartial(version, previousReleases, nb) {
-    partialList = '';
-    nbAdded = 0;
+    var partialList = '';
+    var nbAdded = 0;
     // We always add the last released version to the list
-    for (k = 0; k < previousReleases.length; k++) {
+    for (var k = 0; k < previousReleases.length; k++) {
 
-        previousRelease = stripBuildNumber(previousReleases[k]);
+        var previousRelease = stripBuildNumber(previousReleases[k]);
 
         // In the 38 cycle, we built the 38 beta version from the
         // mozilla-release branch. We don't want beta partials for a release
@@ -122,7 +122,7 @@ function addLastVersionAsPartial(version, previousReleases, nb) {
 }
 
 function getVersionWithBuildNumber(version, previousReleases) {
-    for (j = 0; j < previousReleases.length; j++) {
+    for (var j = 0; j < previousReleases.length; j++) {
         if (previousReleases[j].indexOf(version + 'build') > -1) {
             return previousReleases[j];
         }
@@ -132,8 +132,8 @@ function getVersionWithBuildNumber(version, previousReleases) {
 }
 
 function partialConsistencyCheck(partialsADI, previousReleases) {
-    stripped = [];
-    for (i = 0; i < previousReleases.length; i++) {
+    var stripped = [];
+    for (var i = 0; i < previousReleases.length; i++) {
         stripped[i] = stripBuildNumber(previousReleases[i]).replace('esr','');
     }
     // All partialsADI must be in previousReleases
@@ -155,16 +155,16 @@ function populatePartial(name, version, previousBuilds, partialElement) {
 
     partialElement.val('');
 
-    base = getBaseRepository(name);
+    var base = getBaseRepository(name);
 
-    nbPartial = 0;
-    previousReleases =  [];
-    partialsADI = [];
-    isFxBeta = false;
+    var nbPartial = 0;
+    var previousReleases =  [];
+    var partialsADI = [];
+    var isFxBeta = false;
 
     // Beta version
-    betaRE = /^\d+\.\db\d+$/;
-    betaVersion = version.match(betaRE);
+    var betaRE = /^\d+\.\db\d+$/;
+    var betaVersion = version.match(betaRE);
     if (betaVersion != null && typeof previousBuilds !== 'undefined' && typeof previousBuilds[base + 'beta'] !== 'undefined') {
         previousReleases = previousBuilds[base + 'beta'].sort().reverse();
         nbPartial = 3;
@@ -176,8 +176,8 @@ function populatePartial(name, version, previousBuilds, partialElement) {
     }
 
     // Release version
-    versionRE = /^\d+\.\d+$|^\d+\.\d\.\d+|^\d+\.[\d.]*\desr$/;
-    releaseVersion = version.match(versionRE);
+    var versionRE = /^\d+\.\d+$|^\d+\.\d\.\d+|^\d+\.[\d.]*\desr$/;
+    var releaseVersion = version.match(versionRE);
     if (releaseVersion != null) {
         if (isTB(name) || isESR(version)) {
             // Thunderbird and Fx ESR are using mozilla-esr as branch
@@ -203,8 +203,8 @@ function populatePartial(name, version, previousBuilds, partialElement) {
 
     // Transform the partialsADI datastruct in a single array to
     // simplify processing
-    partialsADIVersion = [];
-    for (i = 0; i < partialsADI.length; i++) {
+    var partialsADIVersion = [];
+    for (var i = 0; i < partialsADI.length; i++) {
         partialsADIVersion[i] = partialsADI[i].version;
     }
 
@@ -215,8 +215,8 @@ function populatePartial(name, version, previousBuilds, partialElement) {
     // Check that all partials match a build.
     partialConsistencyCheck(partialsADIVersion, previousReleases);
 
-    partial = '';
-    partialAdded = 0;
+    var partial = '';
+    var partialAdded = 0;
 
     // When we have the ADI for Firefox Beta or Thunderbird, we can remove
     // this special case
@@ -243,7 +243,7 @@ function populatePartial(name, version, previousBuilds, partialElement) {
         }
         // Build a previous release should not occur but it is the case
         // don't provide past partials
-        newPartial = getVersionWithBuildNumber(partialsADIVersion[i], previousReleases);
+        var newPartial = getVersionWithBuildNumber(partialsADIVersion[i], previousReleases);
         if (newPartial != undefined) {
             // Only add when we found a matching version
             partial += newPartial;
@@ -287,7 +287,7 @@ function setupVersionSuggestions(versionElement, versions, buildNumberElement, b
 
     // From the version, try to guess the branch
     function populateBranch(name, version) {
-        branch = guessBranchFromVersion(name, version);
+        var branch = guessBranchFromVersion(name, version);
         branchElement.val(branch);
     }
 
@@ -309,8 +309,8 @@ function setupVersionSuggestions(versionElement, versions, buildNumberElement, b
         }
 
         // Format the data for display
-        partialString = 'ADI:<br />';
-        for (i = 0; i < partialsADI.length; i++) {
+        var partialString = 'ADI:<br />';
+        for (var i = 0; i < partialsADI.length; i++) {
             partialString += partialsADI[i].version + ': ' + partialsADI[i].ADI + '<br />';
         }
 
@@ -330,8 +330,8 @@ function setupVersionSuggestions(versionElement, versions, buildNumberElement, b
             collision: 'flipfit',
         },
         select: function(event, ui) {
-            name = event.target.name;
-            version = ui.item.value;
+            var name = event.target.name;
+            var version = ui.item.value;
             populateBuildNumber(version);
             populateBranch(name, version);
             if (!isFennec(name)) {

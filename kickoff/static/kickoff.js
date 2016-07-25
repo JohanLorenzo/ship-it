@@ -218,11 +218,9 @@ function viewReleases() {
 function toLocalDate() {
 
     $('.dateDisplay').each(function() {
-        dateField = $(this).html();
-        if (dateField === 'None') {
-            // Field not set in the db, don't show anything
-            formateddate = '';
-        } else {
+        var dateField = $(this).html();
+        var formateddate = '';
+        if (dateField !== 'None') {
             var localdate = new Date(dateField);
             // formatDate does not handle hour/minute
             formateddate = $.datepicker.formatDate('yy/mm/dd', localdate) + '<br />' + localdate.getHours() + ':' + (localdate.getMinutes() < 10 ? '0' : '') + localdate.getMinutes();
@@ -255,7 +253,7 @@ function submittedReleaseButtons(buttonId) {
 }
 
 function sendAjaxQuery(releaseName, query) {
-    csrfToken = $('#csrf_token').val();
+    var csrfToken = $('#csrf_token').val();
 
     var request = $.ajax({
         url: '/releases/' + releaseName,
@@ -275,6 +273,7 @@ function sendAjaxQuery(releaseName, query) {
 
 function updateShip(releaseName, shipped) {
 
+    var status, shippedAt;
     if (shipped) {
         status = 'shipped';
         var d = new Date();
@@ -284,15 +283,15 @@ function updateShip(releaseName, shipped) {
         status = 'Started';
         shippedAt = '';
     }
-    query = 'status=' + status + '&shippedAt=' + shippedAt;
+    var query = 'status=' + status + '&shippedAt=' + shippedAt;
     sendAjaxQuery(releaseName, query);
 
 }
 
 function updateDesc(releaseName, id) {
-    description = $('textarea#desc' + id).val();
-    isSecurityDriven = $('#isSecurityDriven' + id).prop('checked');
-    query = 'description=' + description + '&isSecurityDriven=' + isSecurityDriven;
+    var description = $('textarea#desc' + id).val();
+    var isSecurityDriven = $('#isSecurityDriven' + id).prop('checked');
+    var query = 'description=' + description + '&isSecurityDriven=' + isSecurityDriven;
     sendAjaxQuery(releaseName, query);
 }
 
