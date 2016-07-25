@@ -5,9 +5,9 @@ function initialSetup() {
     // Saving last active element using localStorage
     $('#tabs').tabs({
         activate: function(event, ui) {
-         localStorage.setItem('active_tab', $('#tabs')
+            localStorage.setItem('active_tab', $('#tabs')
             .tabs('option', 'active'));
-     },
+        },
         active: parseInt(localStorage.getItem('active_tab')),
     });
 
@@ -152,23 +152,23 @@ function viewReleases() {
         'aoColumns': [
             {'mData': 'name', 'bSearchable': false, 'bSortable': false,
              'mRender': function(data, type, full) {
-                return '<a class="btn btn-default btn-xs" href="release/' + data + '/edit_release.html">Edit</a>';
-            }},
+                 return '<a class="btn btn-default btn-xs" href="release/' + data + '/edit_release.html">Edit</a>';
+             }},
             {'mData': 'status',
              'mRender': function(data, type, full) {
-                if (data == 'Complete') {
-                    return '<span class="status_complete">' + data + '</span>';
-                }
+                 if (data == 'Complete') {
+                     return '<span class="status_complete">' + data + '</span>';
+                 }
 
-                return data;
-            }},
+                 return data;
+             }},
             {'mData': 'name'},
             {'mData':  'description'},
             {'mData': 'submitter'},
             {'mData': 'submittedAt', 'bSearchable': false,
              'mRender': function(data, type, full) {
-                return '<span style="white-space: nowrap;" class="dateDisplay">' + data + '</span>';
-            }},
+                 return '<span style="white-space: nowrap;" class="dateDisplay">' + data + '</span>';
+             }},
             {'mData': 'branch'},
             {'mData': 'mozillaRevision'},
             {'mData': 'mozillaRelbranch'},
@@ -178,32 +178,32 @@ function viewReleases() {
             {'mData': 'name', 'mRender': buildl10nLink},
             {'mData': 'partials',
              'mRender': function(data, type, full) {
-                if (data) {
-                    return commaToNewLine(data);
-                }
+                 if (data) {
+                     return commaToNewLine(data);
+                 }
 
-                return '';
-            }},
+                 return '';
+             }},
             {'mData': 'promptWaitTime', 'mRender': buildPromptWaitTimeLabel},
             {'mData': 'mh_changeset', 'sDefaultContent': 'N/A'},
             {'mData': 'comment', 'mRender': buildCommentCell},
             {'mData': 'shippedAt', 'bSearchable': false,
              'mRender': function(data, type, full) {
-                return '<span class="dateDisplay">' + data + '</span>';
-            }},
+                 return '<span class="dateDisplay">' + data + '</span>';
+             }},
             {'mData': 'status',
              'mRender': function(data, type, full) {
-                if (!full.shippedAt) {
-                    if (full.ReleaseMarkedAsShipped) {
-                        return 'Other build shipped';
-                    } else {
-                        return 'Not shipped <input type="submit" value="Mark as Shipped" class="submitButton" onclick="return updateShip(\'' + full.name + '\', true)" />';
-                    }
-                } else {
-                    return 'Shipped <input type="submit" value="Mark as Not Shipped" class="submitButton" onclick="return updateShip(\'' + full.name + '\', false)" />';
-                }
+                 if (!full.shippedAt) {
+                     if (full.ReleaseMarkedAsShipped) {
+                         return 'Other build shipped';
+                     } else {
+                         return 'Not shipped <input type="submit" value="Mark as Shipped" class="submitButton" onclick="return updateShip(\'' + full.name + '\', true)" />';
+                     }
+                 } else {
+                     return 'Shipped <input type="submit" value="Mark as Not Shipped" class="submitButton" onclick="return updateShip(\'' + full.name + '\', false)" />';
+                 }
 
-            }}
+             }}
         ],
         'fnDrawCallback': function(oSettings) {
             toLocalDate();
@@ -234,7 +234,7 @@ function toLocalDate() {
             $(this).empty().append('Date: ' + formateddate);
         }
     });
-};
+}
 
 function escapeExpression(str) {
     return str.replace(/([#;&,_\-\.\+\*\~':"\!\^$\[\]\(\)=>\|])/g, '\\$1');
